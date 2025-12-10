@@ -22,8 +22,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "BarberFy - Agendamento de Cortes",
-  description: "Agende seu corte na BarberFy de forma rápida e fácil",
+  title: "Cube - Aprimore o SEO dos seus sites de forma simples.",
+  description:
+    " Aumente a visibilidade do seu site com nossas ferramentas de SEO fáceis de usar. Melhore seu ranking no Google e atraia mais visitantes hoje mesmo!",
   icons: {
     icon: "/favicon.ico",
   },

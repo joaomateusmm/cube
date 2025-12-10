@@ -2,7 +2,7 @@
 
 import { Environment, Float, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 
 // --- Interfaces ---
@@ -10,51 +10,6 @@ interface ModelProps {
   position: [number, number, number];
   rotation: [number, number, number];
   scale: number;
-}
-
-// =========================================================
-// 1. MODELO DA MOEDA (Coin) - Visual
-// =========================================================
-function CoinModel({ position, rotation, scale }: ModelProps) {
-  const gltf = useGLTF("/models/coin.gltf");
-  const scene = useMemo(() => gltf.scene.clone(), [gltf.scene]);
-
-  useEffect(() => {
-    scene.traverse((child: THREE.Object3D) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        if (mesh.geometry) {
-          const geometry = mesh.geometry;
-          geometry.computeBoundingBox();
-          const boundingBox = geometry.boundingBox;
-          if (boundingBox) {
-            const size = new THREE.Vector3();
-            boundingBox.getSize(size);
-            const isLargeAndFlat =
-              (size.x > 2 && size.z < 0.1) || (size.z > 2 && size.x < 0.1);
-            if (isLargeAndFlat) {
-              mesh.visible = false;
-              return;
-            }
-          }
-        }
-        if (!mesh.material) mesh.material = new THREE.MeshStandardMaterial();
-        const material = mesh.material as THREE.MeshStandardMaterial;
-        if (material.color) material.color.set("#FFFFFF");
-        material.roughness = 0.1;
-        material.metalness = 0.1;
-        if (material.emissive) material.emissive.set("#000000");
-        material.emissiveIntensity = 0;
-        material.needsUpdate = true;
-      }
-    });
-  }, [scene]);
-
-  return (
-    <group position={position} rotation={rotation} scale={scale}>
-      <primitive object={scene} />
-    </group>
-  );
 }
 
 // =========================================================

@@ -12,7 +12,7 @@ interface Props {
   shouldAnimate?: boolean;
 }
 
-export const RevealBlockText = ({
+export const RevealBlockText2 = ({
   children,
   width = "fit-content",
   boxColor = "#372AAC",

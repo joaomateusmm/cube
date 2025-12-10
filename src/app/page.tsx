@@ -16,7 +16,7 @@ import GradientText from "@/components/GradientText";
 import { Header } from "@/components/header";
 import HeroSection3 from "@/components/HeroSection3";
 import { HeroText } from "@/components/HeroText";
-// O nosso Loader
+// O nosso Loader (Certifique-se que o caminho está correto)
 import CurveLoader from "@/components/LoaderPage";
 import { RevealBlockText } from "@/components/RevealBlockText";
 import SingleCube from "@/components/SingleCube";
@@ -25,13 +25,14 @@ export default function Home() {
   const sectionRef = useRef<HTMLElement>(null);
 
   // --- LÓGICA DO LOADER ---
-  // O hook useProgress dá-nos o progresso (0 a 100) de todos os componentes R3F
   const { progress } = useProgress();
   const [isLoading, setIsLoading] = useState(true);
 
+  // NOVO: Estado que controla quando as animações de texto podem começar
+  // Inicia false, e só vira true quando a cortina preta sumir completamente
+  const [heroAnimationStart, setHeroAnimationStart] = useState(false);
+
   useEffect(() => {
-    // Quando o progresso chegar a 100%, esperamos um pouquinho (500ms)
-    // para garantir que não há lags de renderização e removemos o loader.
     if (progress === 100) {
       const timeout = setTimeout(() => {
         setIsLoading(false);
@@ -77,8 +78,14 @@ export default function Home() {
   return (
     <main className="relative w-full bg-black overflow-x-hidden">
       {/* --- INSERÇÃO DO LOADER --- */}
-      {/* Ele recebe o estado isLoading. Se for true, cobre a tela. Se false, faz o swipe. */}
-      <CurveLoader isLoading={isLoading} />
+      {/* 1. isLoading controla se o loader está presente.
+          2. onAnimationComplete é chamado quando a cortina termina de subir/descer.
+             Isso ativa o setHeroAnimationStart(true).
+      */}
+      <CurveLoader
+        isLoading={isLoading}
+        onAnimationComplete={() => setHeroAnimationStart(true)}
+      />
 
       <FloatingScrollbar />
       <Header />
@@ -119,8 +126,8 @@ export default function Home() {
 
       {/* --- HERO SECTION --- */}
       <section className="relative h-screen w-full p-4 md:p-12 box-border flex items-center justify-center z-20">
-        <div className="relative h-full w-full rounded-3xl p-[1px] bg-gradient-to-b from-black to-neutral-600">
-          <div className="relative h-full w-full rounded-3xl overflow-hidden bg-gradient-to-br from-black via-black to-purple-900">
+        <div className="relative h-full w-full rounded-3xl p-px bg-linear-to-b from-black to-neutral-600">
+          <div className="relative h-full w-full rounded-3xl overflow-hidden bg-linear-to-br from-black via-black to-purple-900">
             <div className="grid h-full w-full grid-cols-1 lg:grid-cols-2">
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <Image
@@ -132,7 +139,11 @@ export default function Home() {
                 />
               </div>
               <div className="relative z-10 flex h-full w-full items-center justify-center lg:justify-start px-6 lg:pl-16">
-                <HeroText />
+                {/* IMPORTANTE: O seu texto "Eleve seu Score..." está dentro deste componente.
+                    Você precisará entrar no arquivo HeroText.tsx e garantir que ele aceita 
+                    a prop 'shouldAnimate' e a repassa para o RevealBlockText lá dentro.
+                */}
+                <HeroText shouldAnimate={heroAnimationStart} />
               </div>
               <div className="relative z-10 h-full w-full flex items-center justify-center pointer-events-none">
                 <div className="absolute inset-0 w-full h-full">
@@ -170,8 +181,9 @@ export default function Home() {
           className="relative z-40 flex flex-col items-center max-w-5xl mx-auto w-full mt-3"
           style={{ y: yText, opacity: opacityText }}
         >
-          <h2 className="mb-6 font-['Clash_Display'] flex flex-col items-center uppercase text-center text-[40px] md:text-[85px] font-medium leading-[1] md:leading-[0.9] bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
-            <RevealBlockText>
+          <h2 className="mb-6 font-['Clash_Display'] flex flex-col items-center uppercase text-center text-[40px] md:text-[85px] font-medium leading-none md:leading-[0.9] bg-linear-to-b from-white to-gray-500 bg-clip-text text-transparent">
+            {/* Passamos shouldAnimate para garantir sincronia, embora aqui o scroll já controle também */}
+            <RevealBlockText shouldAnimate={heroAnimationStart}>
               <GradientText
                 colors={["#C7C7C7", "#7E7E7E", "#FEFEFE", "#7E7E7E", "#FEFEFE"]}
                 animationSpeed={6}
@@ -181,7 +193,8 @@ export default function Home() {
                 Revolucionando o
               </GradientText>
             </RevealBlockText>
-            <RevealBlockText delay={0.4}>
+
+            <RevealBlockText delay={0.4} shouldAnimate={heroAnimationStart}>
               <GradientText
                 colors={["#C7C7C7", "#7E7E7E", "#FEFEFE", "#7E7E7E", "#FEFEFE"]}
                 animationSpeed={6}
@@ -194,13 +207,13 @@ export default function Home() {
           </h2>
 
           <div className="font-montserrat max-w-2xl text-center flex flex-col items-center md:text-xl text-gray-400 mt-4 leading-relaxed">
-            <RevealBlockText delay={0.6}>
+            <RevealBlockText delay={0.6} shouldAnimate={heroAnimationStart}>
               <p>
                 Nosso sistema avançado foi pensado para o mínimo conhecedor,
                 desde o
               </p>
             </RevealBlockText>
-            <RevealBlockText delay={0.8}>
+            <RevealBlockText delay={0.8} shouldAnimate={heroAnimationStart}>
               <p>
                 mais apto profissional, conectando suas palavras até a pesquisa
                 do usuário.
@@ -218,8 +231,9 @@ export default function Home() {
               duration: 0.5,
             }}
           >
+            {/* Botões... */}
             <button
-              className="group relative flex flex-col items-center justify-center w-[140px] h-[44px] decoration-0 transition-transform active:scale-[0.98] cursor-pointer outline-none"
+              className="group relative flex flex-col items-center justify-center w-[140px] h-11 decoration-0 transition-transform active:scale-[0.98] cursor-pointer outline-none"
               type="button"
               style={{
                 backgroundColor: "rgba(147, 51, 234, 0.15)",
@@ -231,7 +245,7 @@ export default function Home() {
               data-framer-name="desktop"
             >
               <div
-                className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-[1200ms] opacity-100 group-hover:opacity-0"
+                className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-1200ms opacity-100 group-hover:opacity-0"
                 style={{
                   background:
                     "radial-gradient(15% 50% at 50% 100%, rgb(147, 51, 234) 0%, rgba(147, 51, 234, 0) 100%)",
@@ -240,7 +254,7 @@ export default function Home() {
                 }}
               ></div>
               <div
-                className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-[1200ms] opacity-0 group-hover:opacity-100"
+                className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-1200ms opacity-0 group-hover:opacity-100"
                 style={{
                   background:
                     "radial-gradient(60.6% 50% at 50% 100%, rgb(147, 51, 234) 0%, rgba(147, 51, 234, 0) 100%)",

@@ -18,14 +18,13 @@ function Cube({ position, rotation, scale }: CubeProps) {
 
   const scene = useMemo(() => gltf.scene.clone(), [gltf.scene]);
 
+  // 1. ADICIONADO: Vetor de 'velocity' para a física
   const vectors = useMemo(
     () => ({
       original: new THREE.Vector3(...position),
       vec: new THREE.Vector3(),
       dir: new THREE.Vector3(),
-      velocity: new THREE.Vector3(0, 0, 0),
-      // 1. ADICIONADO: Vetor para suavizar o movimento de "olhar"
-      mouseRotation: new THREE.Vector3(0, 0, 0),
+      velocity: new THREE.Vector3(0, 0, 0), // Velocidade atual do cubo
     }),
     [position]
   );
@@ -61,25 +60,26 @@ function Cube({ position, rotation, scale }: CubeProps) {
   useFrame((state) => {
     if (!groupRef.current) return;
 
-    const { original, vec, dir, velocity, mouseRotation } = vectors;
+    const { original, vec, dir, velocity } = vectors;
     const { width, height } = state.viewport;
-    const time = state.clock.getElapsedTime(); // Tempo para o giro contínuo
 
     // Posição do mouse
     const mouseX = (state.pointer.x * width) / 2;
     const mouseY = (state.pointer.y * height) / 2;
 
     vec.set(mouseX, mouseY, original.z);
+
     const distance = vec.distanceTo(original);
 
-    // --- FÍSICA DE POSIÇÃO (MANTIDA IGUAL) ---
-    const repulsionRadius = 2.5;
-    const repulsionStrength = 0.5;
+    // --- CONFIGURAÇÃO DA ANIMAÇÃO ---
+    const repulsionRadius = 3; // Raio de ação
+    const repulsionStrength = 0.5; // Força do empurrão
 
     let targetX = original.x;
     let targetY = original.y;
     let targetZ = original.z;
 
+    // Se o mouse estiver perto, mudamos o alvo para longe (repulsão)
     if (distance < repulsionRadius) {
       dir.subVectors(original, vec).normalize();
       const intensity = (1 - distance / repulsionRadius) * repulsionStrength;
@@ -89,53 +89,34 @@ function Cube({ position, rotation, scale }: CubeProps) {
       targetZ += dir.z * intensity * 0.2;
     }
 
-    const tension = 0.007;
-    const friction = 0.93;
+    const tension = 0.02; // Força para voltar (mais baixo = mais elástico/lento)
+    const friction = 0.85; // Atrito (0.9 = escorregadio, 0.95 = pesado)
 
+    // A força é a diferença entre onde ele está e onde devia estar
     const displacementX = targetX - groupRef.current.position.x;
     const displacementY = targetY - groupRef.current.position.y;
     const displacementZ = targetZ - groupRef.current.position.z;
 
+    // Física: Aceleração = Força da mola
     velocity.x += displacementX * tension;
     velocity.y += displacementY * tension;
     velocity.z += displacementZ * tension;
 
+    // Física: Aplicar atrito (para não oscilar para sempre)
     velocity.multiplyScalar(friction);
 
+    // Aplicar a velocidade à posição atual
     groupRef.current.position.x += velocity.x;
     groupRef.current.position.y += velocity.y;
     groupRef.current.position.z += velocity.z;
 
-    // --- NOVA LÓGICA DE ROTAÇÃO (OLHAR PARA O MOUSE) ---
-
-    // 2. Definimos o alvo da rotação baseado na posição do mouse (Tilt)
-    // Dividir por 8 controla o quão "forte" é o olhar. Menos = mais rotação.
-    const targetRotX = (state.pointer.y * Math.PI) / 8;
-    const targetRotY = (state.pointer.x * Math.PI) / 8;
-
-    // 3. Suavizamos o movimento do "pescoço" do cubo (Lerp)
-    const rotationSmoothness = 0.1;
-    mouseRotation.x = THREE.MathUtils.lerp(
-      mouseRotation.x,
-      targetRotX,
-      rotationSmoothness
-    );
-    mouseRotation.y = THREE.MathUtils.lerp(
-      mouseRotation.y,
-      targetRotY,
-      rotationSmoothness
-    );
-
-    // 4. Aplicamos TUDO: Rotação original + Giro do Tempo + Influência do Mouse
-    // Isso garante que ele gira sozinho, mas inclina na direção do mouse.
-    groupRef.current.rotation.x =
-      rotation[0] + time * randomSpeed.current.x - mouseRotation.x;
-    groupRef.current.rotation.y =
-      rotation[1] + time * randomSpeed.current.y + mouseRotation.y;
+    // Rotação Constante
+    groupRef.current.rotation.x += randomSpeed.current.x * 0.02;
+    groupRef.current.rotation.y += randomSpeed.current.y * 0.02;
   });
 
   return (
-    <Float speed={0} rotationIntensity={0} floatIntensity={0}>
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
       <group ref={groupRef} scale={scale} position={position}>
         <primitive object={scene} />
       </group>
@@ -179,13 +160,13 @@ export default function CubeScene() {
         />
 
         <Cube position={[1.3, 0.8, 1]} rotation={[2, 2, 0]} scale={3.2} />
-        <Cube position={[-1.3, -0.2, 0]} rotation={[0.5, 0.5, 0]} scale={3.6} />
+        <Cube position={[-1, 0, 0]} rotation={[0.5, 0.5, 0]} scale={3.8} />
         <Cube position={[0.6, -2.3, 0]} rotation={[1, 2, 0]} scale={3.7} />
-        <Cube position={[-2, -2.8, 1]} rotation={[0.8, 1, 0]} scale={3.3} />
-        <Cube position={[4.8, 3, -2]} rotation={[1, 0, 0.5]} scale={4.5} />
+        <Cube position={[-1.8, -2.8, 1]} rotation={[0.8, 1, 0]} scale={3.3} />
+        <Cube position={[4.6, 3.4, -2]} rotation={[1, 0, 0.5]} scale={4.5} />
         <Cube position={[4.5, 0.2, -1]} rotation={[-0.4, 1, 0]} scale={4.4} />
         <Cube
-          position={[3.7, -2.4, 0.5]}
+          position={[3.7, -2.6, 0.5]}
           rotation={[0.5, 0.1, 0.5]}
           scale={3.7}
         />

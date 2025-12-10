@@ -115,7 +115,7 @@ function Cube({ position, rotation, scale }: CubeProps) {
 
     // Física de Mola (Spring Physics)
     const tension = 0.02; // Força para voltar (mais baixo = mais elástico/lento)
-    const friction = 0.92; // Atrito (0.9 = escorregadio, 0.95 = pesado)
+    const friction = 0.85; // Atrito (0.9 = escorregadio, 0.95 = pesado)
 
     const displacementX = targetX - groupRef.current.position.x;
     const displacementY = targetY - groupRef.current.position.y;

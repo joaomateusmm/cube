@@ -90,7 +90,7 @@ export default function VerticalScrollSection() {
           <div className="w-[50%] h-full relative pl-50">
             <div
               ref={cardsWrapperRef}
-              className="flex flex-col gap-[50px] will-change-transform pt-20 pb-48 mt-56"
+              className="flex flex-col gap-[50px] will-change-transform pt-20 pb-80 mt-56"
             >
               <IntegrationCard />
               <IntegrationCard2 />
@@ -143,7 +143,7 @@ export default function VerticalScrollSection() {
               >
                 {/* BOTÃO COMPLEXO */}
                 <button
-                  className="group relative flex flex-col items-center justify-center w-[140px] h-[44px] decoration-0 transition-transform active:scale-[0.98] cursor-pointer outline-none"
+                  className="group relative flex flex-col items-center justify-center w-[140px] h-11 decoration-0 transition-transform active:scale-[0.98] cursor-pointer outline-none"
                   type="button"
                   style={{
                     backgroundColor: "rgba(147, 51, 234, 0.15)",
@@ -154,7 +154,7 @@ export default function VerticalScrollSection() {
                   }}
                 >
                   <div
-                    className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-[1200ms] opacity-100 group-hover:opacity-0"
+                    className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-1200 opacity-100 group-hover:opacity-0"
                     style={{
                       background:
                         "radial-gradient(15% 50% at 50% 100%, rgb(147, 51, 234) 0%, rgba(147, 51, 234, 0) 100%)",
@@ -163,7 +163,7 @@ export default function VerticalScrollSection() {
                     }}
                   ></div>
                   <div
-                    className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-[1200ms] opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 pointer-events-none transition-opacity ease-in-out duration-1200 opacity-0 group-hover:opacity-100"
                     style={{
                       background:
                         "radial-gradient(60.6% 50% at 50% 100%, rgb(147, 51, 234) 0%, rgba(147, 51, 234, 0) 100%)",
@@ -193,11 +193,6 @@ export default function VerticalScrollSection() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Secção extra para scroll */}
-      <section className="h-screen w-full bg-neutral-900 flex items-center justify-center">
-        <h2 className="text-3xl text-gray-500">Próxima Secção</h2>
       </section>
     </div>
   );

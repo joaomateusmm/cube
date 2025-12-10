@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+// Certifica-te de que o caminho está correto para onde criaste o arquivo no Passo 1
+import { SplitHoverText } from "@/components/SplitHoverText";
+
 export function Header() {
   // Estado para controlar a visibilidade
   const [isVisible, setIsVisible] = useState(true);
@@ -39,7 +42,6 @@ export function Header() {
 
   return (
     // Container Flutuante com Animação
-    // Adicionei transition-transform e a lógica de translate-y
     <div
       className={`fixed top-0 z-[999] flex w-full justify-center p-6 transition-transform duration-300 ease-in-out ${
         isVisible ? "translate-y-0" : "-translate-y-full"
@@ -91,7 +93,7 @@ export function Header() {
             }}
           ></div>
           <div
-            className="absolute inset-[1px] pointer-events-none z-10 rounded-[7px]"
+            className="absolute inset-px pointer-events-none z-10 rounded-[7px]"
             style={{
               backgroundColor: "rgb(0, 0, 0)",
               opacity: 1,
@@ -109,16 +111,19 @@ export function Header() {
           </div>
         </Link>
 
-        {/* NAVEGAÇÃO */}
+        {/* NAVEGAÇÃO COM EFEITO LANDO NORRIS */}
         <nav className="hidden items-center gap-8 md:flex">
-          {["Features", "Desenvolvedores", "Sobre Nós", "Contato"].map(
+          {["Integrações", "Desenvolvedores", "Sobre Nós", "Contato"].map(
             (item) => (
               <Link
                 key={item}
                 href="#"
-                className="font-montserrat text-sm font-medium text-white/70 transition-colors hover:text-white"
+                // Mantemos a fonte base e a cor 'apagada' (white/70)
+                // Removemos hover:text-white daqui porque o componente SplitHoverText trata da cor do hover
+                className="font-montserrat text-sm font-medium text-white/70 block py-2"
               >
-                {item}
+                {/* O componente SplitHoverText trata da animação */}
+                <SplitHoverText>{item}</SplitHoverText>
               </Link>
             )
           )}
@@ -126,7 +131,7 @@ export function Header() {
 
         {/* BOTÃO CRIAR CONTA */}
         <button
-          className="group relative flex flex-col items-center justify-center w-[140px] h-[44px] decoration-0 transition-transform active:scale-[0.98] cursor-pointer outline-none"
+          className="group relative flex flex-col items-center justify-center w-[140px] h-11 decoration-0 transition-transform active:scale-[0.98] cursor-pointer outline-none"
           type="button"
           style={{
             backgroundColor: "rgba(147, 51, 234, 0.08)",
@@ -177,7 +182,7 @@ export function Header() {
             }}
           ></div>
           <div
-            className="absolute inset-[1px] pointer-events-none z-10 rounded-[7px]"
+            className="absolute inset-px pointer-events-none z-10 rounded-[7px]"
             data-framer-name="Fill"
             style={{
               backgroundColor: "rgb(0, 0, 0)",

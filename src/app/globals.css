@@ -1,0 +1,417 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* 1. Definimos o nome da animação ('animate-gradient') */
+  --animate-gradient: gradient 8s linear infinite;
+
+  /* 2. Definimos os Keyframes (o movimento) */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ... Mantenha todo o código anterior (imports, @theme, :root, .dark) ... */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* --- ADICIONE ISTO NO FINAL, FORA DO @LAYER BASE --- */
+
+/* Esconde a barra de rolagem no Firefox, IE e Edge */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Recomendado pelo Lenis para garantir performance */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.my-shadow {
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.08);
+}
+
+.my-shadow-2 {
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 12px rgba(0, 0, 0, 0);
+}
+
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  border: 2px solid #414141;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.1),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  left: 0.2em;
+  bottom: 0.2em;
+  background-color: #5b31ff;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.2),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.switch input:checked + .slider {
+  box-shadow: 0 0 20px rgba(91, 49, 255, 0.8);
+  border: 2px solid #5b31ff;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(1.5em);
+}
+
+/* OUTROOOO */
+
+.switch-2 {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch-2 input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider-2 {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  border: 2px solid #414141;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.1),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.slider-2:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  left: 0.2em;
+  bottom: 0.15em;
+  background-color: #ff3232;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.2),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.switch-2 input:checked + .slider-2 {
+  box-shadow: 0 0 20px rgba(255, 50, 50, 0.8);
+  border: 2px solid #ff3232;
+}
+
+.switch-2 input:checked + .slider-2:before {
+  transform: translateX(1.5em);
+}
+
+/* OUTROOOO */
+
+.switch-3 {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch-3 input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider-3 {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  border: 2px solid #414141;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.1),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.slider-3:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  left: 0.2em;
+  bottom: 0.15em;
+  background-color: #57c785;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.2),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.switch-3 input:checked + .slider-3 {
+  box-shadow: 0 0 20px rgba(87, 199, 133, 0.8);
+  border: 2px solid #57c785;
+}
+
+.switch-3 input:checked + .slider-3:before {
+  transform: translateX(1.5em);
+}
+
+/* OUTROOOO */
+
+.switch-4 {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch-4 input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider-4 {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  border: 2px solid #414141;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.1),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.slider-4:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  left: 0.2em;
+  bottom: 0.2em;
+  background-color: #eddd53;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 0px 8px rgba(0, 0, 0, 0.5),
+    0 0px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 4px 10px 0px rgba(255, 255, 255, 0.2),
+    inset 0px -4px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.switch-4 input:checked + .slider-4 {
+  box-shadow: 0 0 20px rgba(237, 221, 83, 0.8);
+  border: 2px solid #eddd53;
+}
+
+.switch-4 input:checked + .slider-4:before {
+  transform: translateX(1.5em);
+}

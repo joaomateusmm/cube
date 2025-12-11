@@ -3,7 +3,7 @@
 import gsap from "gsap";
 import { Flame } from "lucide-react";
 import Image from "next/image";
-import { useEffect,useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const IntegrationCard = ({ className }: { className?: string }) => {
   const [isConnected, setIsConnected] = useState(false);
@@ -60,11 +60,11 @@ const IntegrationCard = ({ className }: { className?: string }) => {
 
       // Aplicamos a rotação.
       // Como a hit box é maior, o movimento será mais suave nas bordas.
-      xTo(xPct * 15);
-      yTo(-yPct * 15);
+      xTo(xPct * 5);
+      yTo(-yPct * 5);
 
-      xInnerTo(xPct * 20);
-      yInnerTo(yPct * 20);
+      xInnerTo(xPct * 15);
+      yInnerTo(yPct * 15);
     };
 
     const handleMouseLeave = () => {

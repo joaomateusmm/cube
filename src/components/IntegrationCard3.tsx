@@ -58,12 +58,12 @@ const IntegrationCard = ({ className }: { className?: string }) => {
       const yPct = (mouseY / height - 0.5) * 2;
 
       // Rotação do Card
-      xTo(xPct * 15);
-      yTo(-yPct * 15);
+      xTo(xPct * 5);
+      yTo(-yPct * 5);
 
       // Parallax do Conteúdo
-      xInnerTo(xPct * 20);
-      yInnerTo(yPct * 20);
+      xInnerTo(xPct * 15);
+      yInnerTo(yPct * 15);
     };
 
     const handleMouseLeave = () => {
